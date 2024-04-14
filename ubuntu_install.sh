@@ -174,10 +174,10 @@ if [[ $confirm == "N" || $confirm == "n" ]]; then
 fi
 # get web port
 # shellcheck disable=SC2162
-web_port=8338
+web_port=80
 # get socket port
 # shellcheck disable=SC2162
-socket_port=8339
+socket_port=80
 
 # ai server port
 # shellcheck disable=SC2162
@@ -219,12 +219,14 @@ echo "Rename files "
 rm -rf ./client/dist
 cp -R ./client/dist_source ./client/dist
 echo "Replace ip port"
-sed -i "s|192.168.5.165:8339|$ip:$socket_port|g" ./client/dist/vendors~app.js
-sed -i "s|192.168.5.165:8339|$ip:$socket_port|g" ./client/dist/app.js
+sed -i "s|192.168.5.165:8339|$ip:${socket_port}/ws|g" ./client/dist/vendors~app.js
+sed -i "s|192.168.5.165:8339|$ip:${socket_port}/ws|g" ./client/dist/app.js
 line
 # copy language
-rm -rf ./client/app/Language.CN.js
-cp ./client/app/Language_EN.js ./client/app/Language.CN.js
+# Use English language
+#rm -rf ./client/app/Language.CN.js
+#cp ./client/app/Language_EN.js ./client/app/Language.CN.js
+
 source venv/bin/activate
 
 line

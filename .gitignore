@@ -29,7 +29,7 @@ npm-debug.log
 
 client/cypress/screenshots
 client/cypress/videos
-supervisord.conf
+deploy/supervisord.conf
 uwsgi.ini
 /ai/test/
 /ai/paper/

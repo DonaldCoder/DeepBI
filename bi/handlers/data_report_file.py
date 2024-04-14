@@ -150,7 +150,7 @@ class DataReportFileResource(BaseResource):  # BaseResource
                 }
 
         ai_web_server = settings.AI_WEB_SERVER
-        url = 'http://' + str(ai_web_server) + '/api/autopilot'
+        url = 'http://' + str(ai_web_server) + '/api/async/autopilot'
         response = requests.post(url, json=data)
 
         # 检查响应结果

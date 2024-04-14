@@ -147,7 +147,7 @@ class DataDashboardFileResource(BaseResource):  # BaseResource
                 }
 
         ai_web_server = settings.AI_WEB_SERVER
-        url = 'http://' + str(ai_web_server) + '/api/dashboard'
+        url = 'http://' + str(ai_web_server) + '/api/async/dashboard'
         response = requests.post(url, json=data)
 
         # 检查响应结果

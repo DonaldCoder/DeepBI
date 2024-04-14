@@ -1,4 +1,7 @@
 import asyncio
+import os
+import signal
+
 import websockets
 import time
 from ai.backend.chat_task import ChatClass
@@ -12,17 +15,25 @@ class WSServer:
     def serve_forever(self):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        server_ip = "0.0.0.0"
-        # server_port = 5001
-        server_port = self.server_port
-        start_server = websockets.serve(self.handler, server_ip, server_port, ping_interval=None)
+        env = os.environ.get("ENVIRONMENT")
+        if env == "production":
+            # Set the stop condition when receiving SIGTERM.
+            start_server = websockets.unix_serve(
+                self.handler,
+                path=f"{os.environ['SUPERVISOR_PROCESS_NAME']}.sock",
+            )
+        else:
+            server_ip = "0.0.0.0"
+            # server_port = 5001
+            server_port = self.server_port
+            start_server = websockets.serve(self.handler, server_ip, server_port, ping_interval=None)
 
-        # start_server = websockets.serve(lambda x, y: router(x, y), server_ip, server_port, ping_interval=None)
-        print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
-        print("=== start WebSocket server ===")
-        print("start listen " + server_ip + ":" + str(server_port))
+            # start_server = websockets.serve(lambda x, y: router(x, y), server_ip, server_port, ping_interval=None)
+            print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+            print("=== start WebSocket server ===")
+            print("start listen " + server_ip + ":" + str(server_port))
 
-        # start_server = websockets.serve(self.handler, '0.0.0.0', 5678)
+            # start_server = websockets.serve(self.handler, '0.0.0.0', 5678)
         asyncio.get_event_loop().run_until_complete(start_server)
         asyncio.get_event_loop().run_forever()
 

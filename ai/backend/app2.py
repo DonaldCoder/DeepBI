@@ -102,9 +102,9 @@ def make_app():
 class CustomApplication(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/api/autopilot", MainHandler),
-            (r"/api/dashboard", DashboardHandler),
-            (r"/api/dashboard/(.*)", DashboardHandler),
+            (r"/api/async/autopilot", MainHandler),
+            (r"/api/async/dashboard", DashboardHandler),
+            (r"/api/async/dashboard/(.*)", DashboardHandler),
         ]
 
         print('template_path :', CONFIG.up_file_path)
